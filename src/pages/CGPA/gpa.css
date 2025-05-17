@@ -1,4 +1,5 @@
 .gpa-container {
+    margin: 50px;
     box-sizing: border-box;
     max-width: 800px;
     border: 5px solid black;
@@ -21,15 +22,16 @@
 }
 
 .add-course-fields {
-
     input,
     select {
-        height: 30px;
+        height: 40px;
+        font-size: 0.9rem;
     }
 }
 
 .add-course-fields input {
-    width: 200px;
+    width: 300px;
+    padding-left: 12px;
 }
 
 .add-course-fields select {
@@ -56,4 +58,14 @@
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     background-color: #EC6068;
+}
+
+ol {
+    text-align: justify;
+    padding: 30px;
+    margin: 10px;
+}
+
+ol > li {
+    margin-top: 10px;
 }
