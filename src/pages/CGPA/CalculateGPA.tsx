@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./gpa.css";
 import "../../assets/global.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 interface Course {
   courseName: string;
@@ -19,6 +21,11 @@ function CalculateGPA() {
     setCourses([...courses, { courseName, credits, grade }]);
     setCourseName("");
     setCredits(3);
+  }
+
+  function deleteCourse(index: number) {
+    const updatedCourses = courses.filter((_, i) => i !== index);
+    setCourses(updatedCourses);
   }
 
   return (
@@ -69,16 +76,36 @@ function CalculateGPA() {
           <option value="F">F</option>
         </select>
       </div>
-      <button className="button" onClick={addCourse}>Add Course</button>
-      <div>
+      <button className="button" onClick={addCourse}>
+        Add Course
+      </button>
+      <div className="course-list">
         {courses.map((item, index) => (
-          <div key={index}>
-            <p>Course: {item.courseName}</p>
-            <p>Credits: {item.credits}</p>
-            <p>Letter Grade: {item.grade}</p>
+          <div key={index} className="course-details">
+            <p>{item.courseName.toUpperCase()}</p>
+            <p>{item.credits}</p>
+            <p>{item.grade}</p>
+            <button
+              onClick={() => deleteCourse(index)}
+              className="delete-button"
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </button>
           </div>
         ))}
       </div>
+      <button className="button">Calculate CGPA</button>
+
+      <h1>Instructions to Calculate CGPA</h1>
+      <p>
+        You can use GPA calculator to calculate your SGPA and CGPA. In order to
+        calculate your SGPA, enter the courses of that particular semester. In
+        order to calculate your CGPA, enter the courses of all the semesters.
+        Read the following points carefully to calculate your correct GPA:
+      </p>
+
+      <h2>Your course information will be saved in the browser, you can also download it and load it later.</h2>
+
     </div>
   );
 }

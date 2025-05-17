@@ -6,6 +6,10 @@
     padding: 50px;
 }
 
+.gpa-container > p {
+    text-align: justify;
+}
+
 .add-course-fields {
     min-height: 120px;
     min-width: 100%;
@@ -17,6 +21,7 @@
 }
 
 .add-course-fields {
+
     input,
     select {
         height: 30px;
@@ -29,4 +34,26 @@
 
 .add-course-fields select {
     width: 50px;
+}
+
+.course-details {
+    margin: 40px 0 40px 0;
+    border: none;
+    border-radius: 20px;
+    background-color: #3B3B3B;
+    font-weight: bold;
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 1fr;
+}
+
+.course-details p {
+    font-weight: 400;
+}
+
+.delete-button {
+    cursor: pointer;
+    border: none;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: #EC6068;
 }
