@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./gpa.css";
 import "../../assets/global.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Instructions from "./Instructions";
 import DownloadSection from "./DownloadSection";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 interface Course {
   courseName: string;
@@ -13,23 +14,10 @@ interface Course {
 }
 
 function CalculateGPA() {
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [courses, setCourses] = useLocalStorage<Course[]>("courses", []);
   const [courseName, setCourseName] = useState("");
   const [credits, setCredits] = useState(3);
-  const [grade, setGrade] = useState("A+");
-
-  // for local storage, so that the courses remain saved
-  useEffect(() => {
-    localStorage.setItem("courses", JSON.stringify(courses));
-  }, [courses]);
-
-  // get saved courses
-  useEffect(() => {
-    const savedCourses = localStorage.getItem("courses");
-    if (savedCourses) {
-      setCourses(JSON.parse(savedCourses));
-    }
-  }, []);
+  const [grade, setGrade] = useState("A+"); 
 
   function addCourse() {
     if (courseName.trim() === "") return;
@@ -60,6 +48,7 @@ function CalculateGPA() {
       <div className="add-course-fields">
         <input
           type="text"
+          name="course field"
           placeholder="Enter course name"
           value={courseName}
           onChange={(e) => setCourseName(e.target.value)}
