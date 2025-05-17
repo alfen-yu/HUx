@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./gpa.css";
 import "../../assets/global.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,7 +16,18 @@ function CalculateGPA() {
   const [credits, setCredits] = useState(3);
   const [grade, setGrade] = useState("A+");
 
-  console.log(courses);
+  // for local storage, so that the courses remain saved
+  useEffect(() => {
+    localStorage.setItem("courses", JSON.stringify(courses));
+  }, [courses]);
+
+  // get saved courses
+  useEffect(() => {
+    const savedCourses = localStorage.getItem("courses");
+    if (savedCourses) {
+      setCourses(JSON.parse(savedCourses));
+    }
+  }, []);
 
   function addCourse() {
     if (courseName.trim() === "") return;
