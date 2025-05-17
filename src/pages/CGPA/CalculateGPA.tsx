@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-interface Course { 
-  courseName: string, 
+interface Course {
+  courseName: string,
   credits: number
 }
 
@@ -12,7 +12,7 @@ function CalculateGPA() {
 
   function addCourse() {
     if (courseName.trim() === '') return;
-    setCourses([...courses, {courseName, credits}]);
+    setCourses([...courses, { courseName, credits }]);
     setCourseName('');
     setCredits(3);
   }
