@@ -23,3 +23,21 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.button {
+  padding: 16px 32px;
+  display: inline-block;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border: none;
+  min-width: 200px;
+  border-radius: 10px;
+}
+
+.button:hover {
+  background-color: #555555;
+  color: white;
+} 
