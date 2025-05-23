@@ -17,7 +17,11 @@ function CalculateGPA() {
   const [courses, setCourses] = useLocalStorage<Course[]>("courses", []);
   const [courseName, setCourseName] = useState("");
   const [credits, setCredits] = useState(3);
-  const [grade, setGrade] = useState("A+"); 
+  const [grade, setGrade] = useState("A+");
+
+  const handleUpload = (uploadedCourses: Course[]) => {
+    setCourses(uploadedCourses);
+  };
 
   function addCourse() {
     if (courseName.trim() === "") return;
@@ -102,7 +106,7 @@ function CalculateGPA() {
 
       <Instructions />
 
-      <DownloadSection courseList={courses}/>
+      <DownloadSection courseList={courses} onUpload={handleUpload} />
     </div>
   );
 }
