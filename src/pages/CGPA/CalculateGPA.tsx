@@ -102,7 +102,7 @@ function CalculateGPA() {
 
       <Instructions />
 
-      <DownloadSection />
+      <DownloadSection courseList={courses}/>
     </div>
   );
 }

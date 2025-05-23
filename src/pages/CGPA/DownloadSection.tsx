@@ -1,34 +1,10 @@
-const test = {
-  users: [
-    {
-      id: 1,
-      name: "Caitlyn",
-      surname: "Kerluke",
-      age: 24,
-    },
-    {
-      id: 2,
-      name: "Rowan ",
-      surname: "Nikolaus",
-      age: 45,
-    },
-    {
-      id: 3,
-      name: "Kassandra",
-      surname: "Haley",
-      age: 32,
-    },
-    {
-      id: 4,
-      name: "Rusty",
-      surname: "Arne",
-      age: 58,
-    },
-  ],
-};
+interface Course {
+  courseName: string;
+  credits: number;
+  grade: string;
+}
 
-function DownloadSection() {
-  function exportJson(obj: object) {
+function exportJson(obj: object) {
     const jsonObj = JSON.stringify(obj, null, 2);
     const filename = "courses.json";
     const contentType = "application/json;charset=utf-8";
@@ -37,23 +13,37 @@ function DownloadSection() {
     });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
+
     link.href = url;
-    link.setAttribute("download", filename);
+    link.download = filename;
+
+    document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
+
     URL.revokeObjectURL(url);
   }
+
+function DownloadSection(props: Course[]) {
+
+
+  // function uploadJSON() {
+
+  // }
+
+  console.log(props);
 
   return (
     <div>
       <h2>
-        Your course information will be saved in the browser, you can also
-        download it and load it later.
+        Your course information will be saved in the browser. You can also
+        download it as a backup and load it later.
       </h2>
       <div>
         <button
           className="button"
           onClick={() => {
-            exportJson(test);
+            exportJson(props);
           }}
         >
           Download JSON
