@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./gpa.css";
 import "../../assets/global.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faSquareCaretUp, faSquareCaretDown, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Instructions from "./Instructions";
 import DownloadSection from "./DownloadSection";
 import useLocalStorage from "../../hooks/useLocalStorage";
@@ -13,11 +13,12 @@ interface Course {
   grade: string;
 }
 
-function CalculateGPA() {
+export default function CalculateGPA() {
   const [courses, setCourses] = useLocalStorage<Course[]>("courses", []);
   const [courseName, setCourseName] = useState("");
   const [credits, setCredits] = useState(3);
   const [grade, setGrade] = useState("A+");
+  const [showAll, setShowAll] = useState(false);
 
   const handleUpload = (uploadedCourses: Course[]) => {
     setCourses(uploadedCourses);
@@ -25,7 +26,7 @@ function CalculateGPA() {
 
   function addCourse() {
     if (courseName.trim() === "") return;
-    setCourses([...courses, { courseName, credits, grade }]);
+    setCourses([{ courseName, credits, grade }, ...courses]);
     setCourseName("");
     setCredits(3);
   }
@@ -34,6 +35,27 @@ function CalculateGPA() {
     const updatedCourses = courses.filter((_, i) => i !== index);
     setCourses(updatedCourses);
   }
+
+  // function renderCourses(list: Course[]) {
+  //   list.map(item, index) => {
+
+  //   }
+  // }
+
+
+  // courses.map((item, index) => (
+  //             <div key={index} className="course-details">
+  //               <p>{item.courseName.toUpperCase()}</p>
+  //               <p>{item.credits}</p>
+  //               <p>{item.grade}</p>
+  //               <button
+  //                 onClick={() => deleteCourse(index)}
+  //                 className="delete-button"
+  //               >
+  //                 <FontAwesomeIcon icon={faTrash} />
+  //               </button>
+  //             </div>
+  //           ))
 
   return (
     <div className="gpa-container">
@@ -88,21 +110,39 @@ function CalculateGPA() {
         Add Course
       </button>
       <div className="course-list">
-        {courses.map((item, index) => (
-          <div key={index} className="course-details">
-            <p>{item.courseName.toUpperCase()}</p>
-            <p>{item.credits}</p>
-            <p>{item.grade}</p>
-            <button
-              onClick={() => deleteCourse(index)}
-              className="delete-button"
-            >
-              <FontAwesomeIcon icon={faTrash} />
-            </button>
-          </div>
-        ))}
+        {showAll
+          ? courses.map((item, index) => (
+              <div key={index} className="course-details">
+                <p>{item.courseName.toUpperCase()}</p>
+                <p>{item.credits}</p>
+                <p>{item.grade}</p>
+                <button
+                  onClick={() => deleteCourse(index)}
+                  className="delete-button"
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </div>
+            ))
+          : courses.slice(0, 5).map((item, index) => (
+              <div key={index} className="course-details">
+                <p>{item.courseName.toUpperCase()}</p>
+                <p>{item.credits}</p>
+                <p>{item.grade}</p>
+                <button
+                  onClick={() => deleteCourse(index)}
+                  className="delete-button"
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </div>
+            ))}
       </div>
       <button className="button">Calculate CGPA</button>
+
+      <button className="button" onClick={() => {setShowAll(!showAll)}}>
+        {showAll ? (<>Collapse Courses <FontAwesomeIcon icon={faSquareCaretUp}/></>) : (<>Expand Courses <FontAwesomeIcon icon={faSquareCaretDown}/></>)}
+      </button>
 
       <Instructions />
 
@@ -110,5 +150,3 @@ function CalculateGPA() {
     </div>
   );
 }
-
-export default CalculateGPA;
