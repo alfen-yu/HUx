@@ -6,6 +6,11 @@ interface Course {
   grade: string;
 }
 
+interface DownloadSectionProps {
+  courseList: Course[];
+  onUpload: (courses: Course[]) => void;
+}
+
 function exportJson(courses: Course[]) {
   if (!courses.length) {
     alert("Empty course list");
@@ -28,11 +33,6 @@ function exportJson(courses: Course[]) {
   document.body.removeChild(link);
 
   URL.revokeObjectURL(url);
-}
-
-interface DownloadSectionProps {
-  courseList: Course[];
-  onUpload: (courses: Course[]) => void;
 }
 
 function DownloadSection({ courseList, onUpload }: DownloadSectionProps) {
