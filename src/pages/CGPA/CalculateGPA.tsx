@@ -2,7 +2,11 @@ import { useState } from "react";
 import "./gpa.css";
 import "../../assets/global.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquareCaretUp, faSquareCaretDown, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSquareCaretUp,
+  faSquareCaretDown,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import Instructions from "./Instructions";
 import DownloadSection from "./DownloadSection";
 import useLocalStorage from "../../hooks/useLocalStorage";
@@ -36,26 +40,18 @@ export default function CalculateGPA() {
     setCourses(updatedCourses);
   }
 
-  // function renderCourses(list: Course[]) {
-  //   list.map(item, index) => {
-
-  //   }
-  // }
-
-
-  // courses.map((item, index) => (
-  //             <div key={index} className="course-details">
-  //               <p>{item.courseName.toUpperCase()}</p>
-  //               <p>{item.credits}</p>
-  //               <p>{item.grade}</p>
-  //               <button
-  //                 onClick={() => deleteCourse(index)}
-  //                 className="delete-button"
-  //               >
-  //                 <FontAwesomeIcon icon={faTrash} />
-  //               </button>
-  //             </div>
-  //           ))
+  function renderCourses(list: Course[]) {
+    return list.map((item, index) => (
+      <div key={index} className="course-details">
+        <p>{item.courseName.toUpperCase()}</p>
+        <p>{item.credits}</p>
+        <p>{item.grade}</p>
+        <button onClick={() => deleteCourse(index)} className="delete-button">
+          <FontAwesomeIcon icon={faTrash} />
+        </button>
+      </div>
+    ));
+  }
 
   return (
     <div className="gpa-container">
@@ -110,38 +106,25 @@ export default function CalculateGPA() {
         Add Course
       </button>
       <div className="course-list">
-        {showAll
-          ? courses.map((item, index) => (
-              <div key={index} className="course-details">
-                <p>{item.courseName.toUpperCase()}</p>
-                <p>{item.credits}</p>
-                <p>{item.grade}</p>
-                <button
-                  onClick={() => deleteCourse(index)}
-                  className="delete-button"
-                >
-                  <FontAwesomeIcon icon={faTrash} />
-                </button>
-              </div>
-            ))
-          : courses.slice(0, 5).map((item, index) => (
-              <div key={index} className="course-details">
-                <p>{item.courseName.toUpperCase()}</p>
-                <p>{item.credits}</p>
-                <p>{item.grade}</p>
-                <button
-                  onClick={() => deleteCourse(index)}
-                  className="delete-button"
-                >
-                  <FontAwesomeIcon icon={faTrash} />
-                </button>
-              </div>
-            ))}
+        {showAll ? renderCourses(courses) : renderCourses(courses.slice(0, 5))}
       </div>
       <button className="button">Calculate CGPA</button>
 
-      <button className="button" onClick={() => {setShowAll(!showAll)}}>
-        {showAll ? (<>Collapse Courses <FontAwesomeIcon icon={faSquareCaretUp}/></>) : (<>Expand Courses <FontAwesomeIcon icon={faSquareCaretDown}/></>)}
+      <button
+        className="button"
+        onClick={() => {
+          setShowAll(!showAll);
+        }}
+      >
+        {showAll ? (
+          <>
+            Collapse Courses <FontAwesomeIcon icon={faSquareCaretUp} />
+          </>
+        ) : (
+          <>
+            Expand Courses <FontAwesomeIcon icon={faSquareCaretDown} />
+          </>
+        )}
       </button>
 
       <Instructions />
